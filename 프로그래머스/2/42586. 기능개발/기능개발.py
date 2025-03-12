@@ -1,18 +1,23 @@
+from collections import deque
+
 def solution(progresses, speeds):
+    progresses = deque(progresses)
+    speeds = deque(speeds)
     answer = []
-    day, end = 0, 0
+    count, day = 0, 1
     
-    while len(progresses)> 0:
-        if (progresses[0] + speeds[0]*day) >= 100: 
-            progresses.pop(0)
-            speeds.pop(0)
-            end += 1
-        elif end > 0: 
-            answer.append(end)
-            end = 0
-            day += 1
-        else:
-            day += 1
-            
-    answer.append(end)
+    while progresses:
+        if progresses[0] + speeds[0] * day >= 100:
+            count += 1
+            progresses.popleft()
+            speeds.popleft()
+            continue
+        elif count > 0:
+            answer.append(count)
+            count = 0
+        day += 1
+        
+    answer.append(count)
     return answer
+            
+# 복습 겸 deque 사용해 시간복잡도 O(n)으로 줄임
