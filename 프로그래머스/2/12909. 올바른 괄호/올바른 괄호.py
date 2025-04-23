@@ -1,11 +1,11 @@
 def solution(s):
-
-    count = 0
-    
-    for i in s:
-        if count < 0: return False
-        elif i == '(':
-            count += 1
+    stack = []
+    for i in list(s):
+        if i == '(':
+            stack.append(0)
+        elif stack:
+            stack.pop()
         else:
-            count -= 1
-    return True if count == 0 else False
+            return False
+        
+    return False if stack else True
